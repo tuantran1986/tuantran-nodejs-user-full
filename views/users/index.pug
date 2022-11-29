@@ -1,0 +1,13 @@
+//- 
+
+h1 USER_LIST
+a(href='/') HomePage
+hr
+
+ul
+    each user in userList
+        li 
+            span NAME: 
+            b #{user.name}         
+            span - EMAIL: 
+            b #{user.email}
