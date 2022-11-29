@@ -4,6 +4,20 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+
+// DATA_BASE: 1.require, 2.connect, 3.Schema ,4.model
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/websale2'); // "websale2" = TÊN_DATA_BASE
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    password: String
+});         // SCHEMA = cấu trúc 1 DOCUMENT
+
+const userModel = mongoose.model('users', userSchema);  // MODEL quản lý COLLECTION = "users", có cấu trúc DOCUMENT = "userSchema"
+
+
+
 // CẤU HÌNH - TEMPLATE ENGINE: "PUG"
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -21,14 +35,19 @@ app.get('/', (req, res, next) => {
 });
 
 // 2. LIST USER:
-app.get('/users', (req, res, next) => {
+app.get('/users', async (req, res, next) => {
+
+    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+    const userList = await userModel.find({});
+
     res.render('users/index', {
-        userList: [
-            { name: 'tuantran', email: 'tuantran.kum@gmail.com' },
-            { name: 'dieulinh', email: 'dieulinh@gmail.com' },
-            { name: 'tranan', email: 'tranan@gmail.com' },
-            { name: 'trantu', email: 'trantu@gmail.com' }
-        ]
+        userList : userList
+        // userList: [
+        //     { name: 'tuantran', email: 'tuantran.kum@gmail.com' },
+        //     { name: 'dieulinh', email: 'dieulinh@gmail.com' },
+        //     { name: 'tranan', email: 'tranan@gmail.com' },
+        //     { name: 'trantu', email: 'trantu@gmail.com' }
+        // ]
     })
 })
 
