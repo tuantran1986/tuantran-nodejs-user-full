@@ -1,0 +1,35 @@
+//- 2. NỘI DUNG RIÊNG TỪNG BLOCK
+h3 USER_SEARCH_PAGE
+
+//- FORM : SEARCH_REQUEST
+//- ACTION:
+//- METHOD: GET - đẩy data lên URL - BE lấy = "REQUEST.QUERY"
+form(action='/users/searchRequest', method='GET')
+    //- HIỂN THỊ KEYSEARCH - sau khi có kết quả = "value=keyNameSearch"
+    input(type='text', name='keyNameSearch' value=keyNameSearch || '')
+    button(type="submit") SEARCH
+
+hr
+    
+if userList && userList.length
+    table.table
+        thead
+            tr
+            th(scope='col') ORDER
+            th(scope='col') NAME
+            th(scope='col') EMAIL
+        tbody
+            //- PUG - IF điều kiện
+            //- PUG: vòng lặp - "EACH IN"
+            each user, key in userList
+                tr
+                    th(scope='row') #{key + 1}
+                    td #{user.name}
+                    td #{user.email}
+
+hr
+
+a(href='/') HomePage
+br
+a(href='/users') click - link USER_LIST
+br

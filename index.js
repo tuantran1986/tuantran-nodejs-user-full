@@ -51,6 +51,25 @@ app.get('/users', async (req, res, next) => {
     })
 })
 
+// 3. SEARCH USER = REGEX NAME + REQUEST QUERY
+app.get('/users/search', async (req, res, next) => {
+    res.render('users/searchPage', { userList : [] })
+})
+app.get('/users/searchRequest', async (req, res, next) => {
+    // REQ.QUERY : lấy dữ liệu từ URL - toán tử ? &
+    // console.log('req.query : ', req.query);
+    const keyNameSearch = req.query?.keyNameSearch || '';   // mặc định là '' = all
+    const regexName = new RegExp( keyNameSearch, 'i');
+    
+    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+    const userList = await userModel.find({ name: regexName }); // SEARCH = REGEX NAME
+
+    res.render('users/searchPage', {
+        userList : userList,
+        keyNameSearch : keyNameSearch
+    })
+})
+
 
 app.listen(PORT, () => {
     console.log(`SERVER EXPRESS is RUNNING in PORT = ${PORT}`);
