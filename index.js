@@ -22,6 +22,12 @@ const userModel = mongoose.model('users', userSchema);  // MODEL quản lý COLL
 app.set('views', './views');
 app.set('view engine', 'pug');
 
+// CẤU HÌNH BODY-PARSER:
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 // 1. HOME_PAGE
 app.get('/', (req, res, next) => {
@@ -68,6 +74,23 @@ app.get('/users/searchRequest', async (req, res, next) => {
         userList : userList,
         keyNameSearch : keyNameSearch
     })
+})
+
+// 4. CREATE USER:
+app.get('/users/create', async (req, res, next) => {
+    res.render('users/createPage');
+})
+// CYDB - METHOD = POST
+app.post('/users/createRequest', async (req, res, next) => {
+    // REQ.BODY : lấy dữ liệu từ FORM - POST
+    console.log('req.body : ', req.body);
+    const userNew = req.body;
+
+    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+    // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
+    const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
+
+    res.redirect('/users'); // REDIRECT - CHUYỂN TRANG
 })
 
 

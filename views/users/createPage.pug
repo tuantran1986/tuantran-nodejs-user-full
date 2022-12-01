@@ -1,0 +1,26 @@
+//- 2. NỘI DUNG RIÊNG TỪNG BLOCK
+h3 USER_CREATE_PAGE
+
+//- FORM : SEARCH_REQUEST
+//- ACTION:
+//- METHOD: GET - đẩy data lên URL - BE lấy = "REQUEST.QUERY"
+form(action='/users/createRequest', method='POST')
+    //- HIỂN THỊ KEYSEARCH - sau khi có kết quả = "value=keyNameSearch"
+    label(for='name') name:
+    input(type='text', id='name', name='name')
+    br
+    label(for='email') email:
+    input(type='text', id='email', name='email')
+    br
+    label(for='password') password:
+    input(type='text', id='password', name='password')
+    
+    br
+    button(type="submit") CREATE USER
+
+hr
+
+a(href='/') HomePage
+br
+a(href='/users') click - link USER_LIST
+br
