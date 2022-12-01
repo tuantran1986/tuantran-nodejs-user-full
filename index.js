@@ -4,20 +4,6 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-
-// DATA_BASE: 1.require, 2.connect, 3.Schema ,4.model
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/websale2'); // "websale2" = TÊN_DATA_BASE
-const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
-});         // SCHEMA = cấu trúc 1 DOCUMENT
-
-const userModel = mongoose.model('users', userSchema);  // MODEL quản lý COLLECTION = "users", có cấu trúc DOCUMENT = "userSchema"
-
-
-
 // CẤU HÌNH - TEMPLATE ENGINE: "PUG"
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -27,6 +13,10 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// CẤU HÌNH - ROUTER:
+const userRouter = require('./routers/userRouter');
+
+app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
 
 
 // 1. HOME_PAGE
@@ -39,73 +29,6 @@ app.get('/', (req, res, next) => {
         // truyền biến - namePage: có giá trị = HomePage - vào VIEW = VIEWS/INDEX.PUG
     res.render('index', { namePage: 'HomePage' });
 });
-
-// 2. LIST USER:
-app.get('/users', async (req, res, next) => {
-
-    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
-    const userList = await userModel.find({});
-
-    res.render('users/index', {
-        userList : userList
-        // userList: [
-        //     { name: 'tuantran', email: 'tuantran.kum@gmail.com' },
-        //     { name: 'dieulinh', email: 'dieulinh@gmail.com' },
-        //     { name: 'tranan', email: 'tranan@gmail.com' },
-        //     { name: 'trantu', email: 'trantu@gmail.com' }
-        // ]
-    })
-})
-
-// 3. SEARCH USER = REGEX NAME + REQUEST QUERY
-app.get('/users/search', async (req, res, next) => {
-    res.render('users/searchPage', { userList : [] })
-})
-app.get('/users/searchRequest', async (req, res, next) => {
-    // REQ.QUERY : lấy dữ liệu từ URL - toán tử ? &
-    // console.log('req.query : ', req.query);
-    const keyNameSearch = req.query?.keyNameSearch || '';   // mặc định là '' = all
-    const regexName = new RegExp( keyNameSearch, 'i');
-    
-    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
-    const userList = await userModel.find({ name: regexName }); // SEARCH = REGEX NAME
-
-    res.render('users/searchPage', {
-        userList : userList,
-        keyNameSearch : keyNameSearch
-    })
-})
-
-// 4. CREATE USER:
-app.get('/users/create', async (req, res, next) => {
-    res.render('users/createPage');
-})
-// CYDB - METHOD = POST
-app.post('/users/createRequest', async (req, res, next) => {
-    // REQ.BODY : lấy dữ liệu từ FORM - POST
-    console.log('req.body : ', req.body);
-    const userNew = req.body;
-
-    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
-    // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
-    const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
-
-    res.redirect('/users'); // REDIRECT - CHUYỂN TRANG
-})
-
-// 5. VIEW DETAILS - USER: khai báo "ID" trong PATH_URL
-app.get('/user/detail/:id', async (req, res, next) => {
-    console.log('req.params', req.params);
-    const idDetail = req.params?.id || '';  // lấy value_ID trên URL
-    
-    // truy vấn:
-        // MODEL.FIND : trả về "mảng"
-            // const userDetail = userModel.find({ _id: idDetail })[0];
-        // MODEL.FINDONE : trả về "1 PHẦN TỬ"
-            const userDetail = await userModel.findOne({ _id: idDetail });
-
-    res.render('users/detail', { user: userDetail });
-})
 
 
 
