@@ -93,6 +93,21 @@ app.post('/users/createRequest', async (req, res, next) => {
     res.redirect('/users'); // REDIRECT - CHUYỂN TRANG
 })
 
+// 5. VIEW DETAILS - USER: khai báo "ID" trong PATH_URL
+app.get('/user/detail/:id', async (req, res, next) => {
+    console.log('req.params', req.params);
+    const idDetail = req.params?.id || '';  // lấy value_ID trên URL
+    
+    // truy vấn:
+        // MODEL.FIND : trả về "mảng"
+            // const userDetail = userModel.find({ _id: idDetail })[0];
+        // MODEL.FINDONE : trả về "1 PHẦN TỬ"
+            const userDetail = await userModel.findOne({ _id: idDetail });
+
+    res.render('users/detail', { user: userDetail });
+})
+
+
 
 app.listen(PORT, () => {
     console.log(`SERVER EXPRESS is RUNNING in PORT = ${PORT}`);
