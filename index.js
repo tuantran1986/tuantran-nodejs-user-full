@@ -19,6 +19,10 @@ const userRouter = require('./routers/userRouter');
 app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
 
 
+// CẤU HÌNH - FILE TĨNH = "STATIC"
+app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
+
+
 // 1. HOME_PAGE
 app.get('/', (req, res, next) => {
     // cydb - RES.SEND, RES.RENDER, RES.JSON
