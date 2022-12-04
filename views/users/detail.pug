@@ -1,16 +1,15 @@
-//- 
+//- kế thừa giao diện
+extends ../layout/common.pug
+block content
 
-h1 USER_DETAIL
-a(href='/') HomePage
-br
-a(href='/users/searchRequest') click - link USER_SEARCH
-br
+    //- 
+    h3(class="text-center mt-2") USER_DETAIL
+    hr
 
-hr
-ul 
-    li
-        span NAME: 
-        b #{user.name}      
-    li   
-        span - EMAIL: 
-        b #{user.email}
+    ul 
+        li
+            span NAME: 
+            b #{user.name}      
+        li   
+            span - EMAIL: 
+            b #{user.email}

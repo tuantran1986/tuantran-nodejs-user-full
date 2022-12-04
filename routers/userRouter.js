@@ -6,7 +6,7 @@ const userRouter = express.Router();
 const userModel = require('../models/userModel');
 
 // 1. LIST USER:
-userRouter.get('/', userController.index);
+userRouter.get('/index', userController.index);
 
 // 2. SEARCH USER = REGEX NAME + REQUEST QUERY
 userRouter.get('/search', userController.searchGet);

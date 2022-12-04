@@ -1,3 +1,4 @@
+const userModel = require("../models/userModel");
 
 
 // 1. LIST USER:
@@ -5,7 +6,7 @@ module.exports.index = async (req, res, next) => {
 
     // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
     const userList = await userModel.find({});
-
+    console.log('=========tuantran : ', userList)
     res.render('users/index', {
         userList : userList
         // userList: [
@@ -49,7 +50,7 @@ module.exports.createPost = async (req, res, next) => {
     // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
     const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
 
-    res.redirect(''); // REDIRECT - CHUYỂN TRANG
+    res.redirect('index'); // REDIRECT - CHUYỂN TRANG
 };
 
 // 4. VIEW DETAILS - USER: khai báo "ID" trong PATH_URL

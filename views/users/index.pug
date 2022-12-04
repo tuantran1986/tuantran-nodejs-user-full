@@ -1,18 +1,43 @@
-//- 
+//- kế thừa giao diện
+extends ../layout/common.pug
+block content
 
-h1 USER_LIST
-a(href='/') HomePage
-br
-a(href='/users/searchRequest') click - link USER_SEARCH
-br
+    //- 
+    h3(class="text-center mt-2") USER_LIST
+    hr
 
-hr
+    //- 2. NỘI DUNG RIÊNG TỪNG BLOCK
+    .container
+        .row.mt-2
+            .col-2
+                h3 ListUsers
+            .col-4
+            .col-2
+                button(class="mt-2 ml-2 btn") 
+                    a(href="/users/createPage") USER-CREATE
+            .col-4
+                form.ml-auto(action="/users/searchRequest", method="GET" class="container")
+                    div(class="row justify-content-start")
+                        input(type="text", name="keyNameSearch", class="col-8 mr-2")
+                        button(class="col-4 ml-2 btn btn-primary") SEARCH
 
-ul
-    each user in userList
-        li 
-            span NAME: 
-            b #{user.name}         
-            span - EMAIL: 
-            b #{user.email}
-            a(href=`./users/detail/${user._id}`) VIEW_DETAIL
+        .row.mt-4
+            table.table
+                hr
+                thead
+                    tr
+                    th(scope='col') ORDER
+                    th(scope='col') NAME
+                    th(scope='col') EMAIL
+                    th(scope='col') ACTION
+                tbody
+
+                    each user, key in userList
+                        tr
+                            th(scope='row') #{key + 1}
+                            td 
+                                a(href='/users/details/' + user._id, class="card-link custom") #{user.name}
+                            td #{user.email}
+                            td 
+                                a(href='/users/details/' + user._id, class="card-link") view details
+                                //- a(href='/users/' + user.id, class="card-link") viewDetails
