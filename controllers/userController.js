@@ -44,13 +44,31 @@ module.exports.createGet = async (req, res, next) => {
 module.exports.createPost = async (req, res, next) => {
     // REQ.BODY : lấy dữ liệu từ FORM - POST
     console.log('req.body : ', req.body);
-    const userNew = req.body;
 
-    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
-    // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
-    const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
+    let errors = [];
+    if (req.body && !req.body.name) {
+        errors.push('field Name is error');
+    }
+    if (req.body && !req.body.email) {
+        errors.push('field Email is error');
+    }
+    if (req.body && !req.body.password) {
+        errors.push('field Password is error');
+    }
 
-    res.redirect('index'); // REDIRECT - CHUYỂN TRANG
+    // 
+    if (errors && errors.length > 0) {
+        res.render('users/createPage', {
+            errors: errors,
+            lastDataInput: req.body
+        })
+    } else {
+        const userNew = req.body;
+        // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+        // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
+        const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
+        res.redirect('index'); // REDIRECT - CHUYỂN TRANG
+    }
 };
 
 // 4. VIEW DETAILS - USER: khai báo "ID" trong PATH_URL

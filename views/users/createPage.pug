@@ -13,20 +13,26 @@ block content
             //- ACTION:
             //- METHOD: GET - đẩy data lên URL - BE lấy = "REQUEST.QUERY"
             form(class="col-6", action='/users/createRequest', method='POST')
+
+                //- VALIDATE: mảng lỗi "errors"
+                if errors
+                    each err in errors
+                        div(class="alert alert-danger", role="alert") #{err}
+
                 //- HIỂN THỊ KEYSEARCH - sau khi có kết quả = "value=keyNameSearch"
                 .form-group
                     label(for='name') name:
-                    input.form-control(type='text', id='name', name='name')
+                    input.form-control(type='text', id='name', name='name', value= lastDataInput&&lastDataInput.name ? lastDataInput.name : '')
                     br
                 
                 .form-group
                     label(for='email') email:
-                    input.form-control(type='text', id='email', name='email')
+                    input.form-control(type='text', id='email', name='email', value= lastDataInput&&lastDataInput.email ? lastDataInput.email : '')
                     br
 
                 .form-group
                     label(for='password') password:
-                    input.form-control(type='text', id='password', name='password')
+                    input.form-control(type='text', id='password', name='password', value= lastDataInput&&lastDataInput.password ? lastDataInput.password : '')
                     br
 
                 div(class="d-grid gap-2")
