@@ -43,23 +43,10 @@ module.exports.createGet = async (req, res, next) => {
 };
 module.exports.createPost = async (req, res, next) => {
     // REQ.BODY : lấy dữ liệu từ FORM - POST
-    console.log('req.body : ', req.body);
-
-    let errors = [];
-    if (req.body && !req.body.name) {
-        errors.push('field Name is error');
-    }
-    if (req.body && !req.body.email) {
-        errors.push('field Email is error');
-    }
-    if (req.body && !req.body.password) {
-        errors.push('field Password is error');
-    }
-
-    // 
-    if (errors && errors.length > 0) {
+    // VALIDATE - CREATE USER = MIDDLEWARE "validateCreateUserMDW"
+    if (!res.locals.passValidateCreateUser) {
         res.render('users/createPage', {
-            errors: errors,
+            errors: res.locals.errorsValidateCreateUser,
             lastDataInput: req.body
         })
     } else {
