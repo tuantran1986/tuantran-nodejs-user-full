@@ -15,8 +15,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // CẤU HÌNH - ROUTER:
 const userRouter = require('./routers/userRouter');
+const testMiddleWareRouter = require('./routers/testMiddleWare');
 
 app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
+app.use('/testMiddleWare', testMiddleWareRouter);  // userRouter - PATH GỐC = '/users'
 
 
 // CẤU HÌNH - FILE TĨNH = "STATIC"
