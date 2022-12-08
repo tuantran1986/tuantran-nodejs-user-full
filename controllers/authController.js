@@ -27,7 +27,8 @@ module.exports.loginRequest = async (req, res, next) => {
                 lastValueInput: req.body
             })
         } else {
-            res.redirect('/')
+            res.cookie('userId', currentUser._id);  // ghi vao COOKIE BROWSER: ID của USER
+            res.redirect('/');  // về trang HOME
         }
 
     }

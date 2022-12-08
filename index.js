@@ -27,10 +27,12 @@ const userRouter = require('./routers/userRouter');
 const testMiddleWareRouter = require('./routers/testMiddleWare');
 const testCookieRouter = require('./routers/testCookie');
 const authRouter = require('./routers/authRouter');
+const { authRequire } = require('./middleware/authMiddleWare');
 
-app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
-app.use('/testMiddleWare', testMiddleWareRouter);   // userRouter - PATH GỐC = '/users'
-app.use('/testCookie', testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
+// MIDDLEWARE "authRequire" - thực hiện REDIRECT các REQUEST về trang LOGIN (khi USER chưa LOGIN = chưa có: REQ.COOKIES.USERID)
+app.use('/users', authRequire, userRouter);  // userRouter - PATH GỐC = '/users'
+app.use('/testMiddleWare', authRequire, testMiddleWareRouter);   // userRouter - PATH GỐC = '/users'
+app.use('/testCookie', authRequire, testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
 app.use('/auth', authRouter);           // userRouter - PATH GỐC = '/testCookie'
 
 
