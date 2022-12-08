@@ -6,6 +6,11 @@ const PORT = 3000;
 
 // CYDB - "VỊ TRÍ CÁC CẤU HÌNH" : bản chất là các MIDDLE-WARE : có trước có sau.
 
+// CẤU HÌNH - BIẾN MÔI TRƯỜNG: "DOTENV = .ENVIRONMENT" = "CÀNG SỚM CÀNG TỐT"
+const dotenv = require('dotenv');
+dotenv.config();
+
+
 // CẤU HÌNH - FILE TĨNH = "STATIC"
 app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
 
@@ -14,7 +19,8 @@ app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
 // CẤU HÌNH - "COOKIE"
 const cookieParser = require('cookie-parser');
 // app.use(cookieParser());  // middle-ware : đọc cookies
-app.use(cookieParser('secretStringLaMotChuoiBatKy'));  // middle-ware : đọc cookies
+// app.use(cookieParser('secretStringLaMotChuoiBatKy'));  // middle-ware : đọc SIGNED_COOKIE : giá trị bị PUBLIC lên GIT
+app.use(cookieParser(process.env.SECRET_KEY_SIGNED_COOKIE));  // middle-ware : đọc SIGNED_COOKIE : giá trị đc PRIVATE = PROCESS.ENVIRONMENT
 
 
 
