@@ -47,6 +47,10 @@ html(lang="en")
                             a.nav-link(href='/testCookie/set') 
                                 b 
                                     u setCookie                 
+                        li.nav-item
+                            a.nav-link(href='/testCookie/get') 
+                                b 
+                                    u getCookie                 
              
 
                 //- CURRENT_USER + ĐĂNG NHẬP + ĐĂNG XUẤT
@@ -55,6 +59,8 @@ html(lang="en")
                 img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
                 a.nav-link.active(aria-current='page', href='/')
                     b Logout
+                a.nav-link.active(aria-current='page', href='/auth/login')
+                    b Login
 
 
         //- SỬ DỤNG "BLOCK CONTENT" = thay đổi nội dung

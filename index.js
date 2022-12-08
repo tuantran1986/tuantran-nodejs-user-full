@@ -4,6 +4,15 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+// CYDB - "VỊ TRÍ CÁC CẤU HÌNH" : bản chất là các MIDDLE-WARE : có trước có sau.
+
+// CẤU HÌNH - FILE TĨNH = "STATIC"
+app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
+
+// CẤU HÌNH - "COOKIE"
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());  // middle-ware : đọc cookies
+
 // CẤU HÌNH - TEMPLATE ENGINE: "PUG"
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -17,14 +26,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const userRouter = require('./routers/userRouter');
 const testMiddleWareRouter = require('./routers/testMiddleWare');
 const testCookieRouter = require('./routers/testCookie');
+const authRouter = require('./routers/authRouter');
 
 app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
 app.use('/testMiddleWare', testMiddleWareRouter);   // userRouter - PATH GỐC = '/users'
 app.use('/testCookie', testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
+app.use('/auth', authRouter);           // userRouter - PATH GỐC = '/testCookie'
 
-
-// CẤU HÌNH - FILE TĨNH = "STATIC"
-app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
 
 
 // 1. HOME_PAGE
