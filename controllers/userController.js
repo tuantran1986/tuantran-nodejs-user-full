@@ -1,3 +1,4 @@
+const md5 = require("md5");
 const userModel = require("../models/userModel");
 
 
@@ -50,7 +51,15 @@ module.exports.createPost = async (req, res, next) => {
             lastDataInput: req.body
         })
     } else {
-        const userNew = req.body;
+        const { name, email, password } = req.body;
+        // mã hóa PASSWORD = MD5
+        const hashPassWordMd5 = md5(password);  // "123456"  =>  "e10adc3949ba59abbe56e057f20f883e" 
+        const userNew = {
+            name: name, 
+            email: email, 
+            password: hashPassWordMd5
+        };
+
         // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
         // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
         const userList = await userModel.create(userNew); // SEARCH = REGEX NAME
