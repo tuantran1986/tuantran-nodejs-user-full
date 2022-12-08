@@ -4,12 +4,23 @@ block content
 
     //- 
     h3(class="text-center mt-2") USER_DETAIL
-    hr
 
-    ul 
-        li
-            span NAME: 
-            b #{user.name}      
-        li   
-            span - EMAIL: 
-            b #{user.email}
+    .container
+        .row.mt-2
+            div.pl-4.userDetailContainer
+                //- DETAILS 6 - nhận dữ liệu USER và hiển thị ở VIEW
+                //- PUG: lấy giá trị biến = toán tử #{}
+                div
+                    img(src=user.avatar, class="imgAvatarDetail")
+                div.mt-4
+                    span 
+                        i ID = 
+                    b #{user._id}
+                div 
+                    span 
+                        i NAME = 
+                    b #{user.name}
+                div 
+                    span 
+                        i MAIL = 
+                    b #{user.email}
