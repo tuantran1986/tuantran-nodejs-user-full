@@ -13,7 +13,7 @@
 
 a.nav-link.active.logOutText {
     color: red;
-    text-shadow: 1px 0px white;
+    text-shadow: 1px 0px yellow;
     font-weight: bold;
 }
 

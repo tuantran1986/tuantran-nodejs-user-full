@@ -9,9 +9,14 @@ const PORT = 3000;
 // CẤU HÌNH - FILE TĨNH = "STATIC"
 app.use(express.static('public'));  // đặt trong thư mục "PUBLIC"
 
+
+
 // CẤU HÌNH - "COOKIE"
 const cookieParser = require('cookie-parser');
-app.use(cookieParser());  // middle-ware : đọc cookies
+// app.use(cookieParser());  // middle-ware : đọc cookies
+app.use(cookieParser('secretStringLaMotChuoiBatKy'));  // middle-ware : đọc cookies
+
+
 
 // CẤU HÌNH - TEMPLATE ENGINE: "PUG"
 app.set('views', './views');
