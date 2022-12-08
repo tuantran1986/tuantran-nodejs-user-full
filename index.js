@@ -4,6 +4,9 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
+// BAI 19: debugger trong NODEJS = sửa file PACKAGE.JSON : thêm "--inspect"
+            // "start": "nodemon --inspect index.js"
+
 // CYDB - "VỊ TRÍ CÁC CẤU HÌNH" : bản chất là các MIDDLE-WARE : có trước có sau.
 
 // CẤU HÌNH - BIẾN MÔI TRƯỜNG: "DOTENV = .ENVIRONMENT" = "CÀNG SỚM CÀNG TỐT"
