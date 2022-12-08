@@ -12,55 +12,54 @@ html(lang="en")
         //- MENU
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
             .container-fluid                
-
-                //- 
-                button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
-                    span.navbar-toggler-icon
-                #navbarNav.collapse.navbar-collapse
-                    ul.navbar-nav
-
-                        //- HOME_PAGE
-                        li.nav-item
-                            a.nav-link.active(aria-current='page', href='/') 
-                                b 
-                                    u HomePage
-                                    
-                                
-                        //- QUẢN LÝ - USERS
-                        li.nav-item
-                            a.nav-link(href='/users/index') 
-                                b 
-                                    u UserList
-                        li.nav-item
-                            a.nav-link(href='/users/search') SearchUser
-                        li.nav-item
-                            a.nav-link(href='/users/create') CreateUser
-
-                        //- TEST - MIDDLEWARE:
-                        li.nav-item
-                            a.nav-link(href='/testMiddleWare') 
-                                b 
-                                    u testMiddleWare                 
-
-                        //- TEST - GET SET COOKIES:
-                        li.nav-item
-                            a.nav-link(href='/testCookie/set') 
-                                b 
-                                    u setCookie                 
-                        li.nav-item
-                            a.nav-link(href='/testCookie/get') 
-                                b 
-                                    u getCookie                 
-             
-
                 //- CURRENT_USER + ĐĂNG NHẬP + ĐĂNG XUẤT
+                if currentUserLocal
+                    //- 
+                    button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+                        span.navbar-toggler-icon
+                    #navbarNav.collapse.navbar-collapse
+                        ul.navbar-nav
 
-                a.navbar-brand.brandName(href='/') TUANTRAN
-                img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
-                a.nav-link.active(aria-current='page', href='/')
-                    b Logout
-                a.nav-link.active(aria-current='page', href='/auth/login')
-                    b Login
+                            //- HOME_PAGE
+                            li.nav-item
+                                a.nav-link.active(aria-current='page', href='/') 
+                                    b 
+                                        u HomePage
+                                        
+                                    
+                            //- QUẢN LÝ - USERS
+                            li.nav-item
+                                a.nav-link(href='/users/index') 
+                                    b 
+                                        u UserList
+                            li.nav-item
+                                a.nav-link(href='/users/search') SearchUser
+                            li.nav-item
+                                a.nav-link(href='/users/create') CreateUser
+
+                            //- TEST - MIDDLEWARE:
+                            li.nav-item
+                                a.nav-link(href='/testMiddleWare') 
+                                    b 
+                                        u testMiddleWare                 
+
+                            //- TEST - GET SET COOKIES:
+                            li.nav-item
+                                a.nav-link(href='/testCookie/set') 
+                                    b 
+                                        u setCookie                 
+                            li.nav-item
+                                a.nav-link(href='/testCookie/get') 
+                                    b 
+                                        u getCookie                 
+                
+                    a.navbar-brand.brandName(href='/') #{currentUserLocal.name}
+                    img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
+                    a.nav-link.active(aria-current='page', href='/auth/logout')
+                        b Logout
+                else
+                    a.nav-link.active(aria-current='page', href='/auth/login')
+                        b Login/Register
 
 
         //- SỬ DỤNG "BLOCK CONTENT" = thay đổi nội dung

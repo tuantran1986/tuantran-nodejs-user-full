@@ -74,7 +74,7 @@ module.exports.detail = async (req, res, next) => {
     
     // truy vấn:
         // MODEL.FIND : trả về "mảng"
-            // const userDetail = userModel.find({ _id: idDetail })[0];
+            // const userDetail = await userModel.find({ _id: idDetail })[0];
         // MODEL.FINDONE : trả về "1 PHẦN TỬ"
             const userDetail = await userModel.findOne({ _id: idDetail });
 

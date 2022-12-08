@@ -38,7 +38,7 @@ app.use('/auth', authRouter);           // userRouter - PATH GỐC = '/testCooki
 
 
 // 1. HOME_PAGE
-app.get('/', (req, res, next) => {
+app.get('/', authRequire, (req, res, next) => {
     // cydb - RES.SEND, RES.RENDER, RES.JSON
     // res.send('<h3>TuanTran - hello world</h3>');
 

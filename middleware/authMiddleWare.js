@@ -10,11 +10,12 @@ module.exports.authRequire = async (req, res, next) => {
     }
 
     // so sanh: USERID trong "COOKIE REQ HEADER" - với - "DATABASE"
-    const currentUser = userModel.findOne({ _id: req.cookies.userId });
+    const currentUser = await userModel.findOne({ _id: req.cookies.userId });
     if (!currentUser) {
         res.redirect('/auth/login');
         return;
     }
-
+    console.log('currentUser: ', currentUser);
+    res.locals.currentUserLocal = currentUser;  // lưu LOCAL - để hiển thị trên VIEW - MENU
     next();
 }

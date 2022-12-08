@@ -8,6 +8,12 @@ module.exports.login = (req, res, next) => {
 }
 
 
+module.exports.logout = (req, res, next) => {
+    res.clearCookie('userId');
+    res.render('auth/login');
+}
+
+
 
 module.exports.loginRequest = async (req, res, next) => {
     let errors = [];
@@ -33,7 +39,7 @@ module.exports.loginRequest = async (req, res, next) => {
                 lastValueInput: req.body
             })
         } else {
-            res.cookie('userId', currentUser._id);  // ghi vao COOKIE BROWSER: ID của USER
+            res.cookie('userId', currentUser._id);      // ghi vao COOKIE BROWSER: ID của USER
             res.redirect('/');  // về trang HOME
         }
 
