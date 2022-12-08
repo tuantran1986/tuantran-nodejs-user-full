@@ -16,9 +16,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // CẤU HÌNH - ROUTER:
 const userRouter = require('./routers/userRouter');
 const testMiddleWareRouter = require('./routers/testMiddleWare');
+const testCookieRouter = require('./routers/testCookie');
 
 app.use('/users', userRouter);  // userRouter - PATH GỐC = '/users'
-app.use('/testMiddleWare', testMiddleWareRouter);  // userRouter - PATH GỐC = '/users'
+app.use('/testMiddleWare', testMiddleWareRouter);   // userRouter - PATH GỐC = '/users'
+app.use('/testCookie', testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
 
 
 // CẤU HÌNH - FILE TĨNH = "STATIC"
