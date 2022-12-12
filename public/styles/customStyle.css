@@ -22,3 +22,26 @@ a.nav-link.active.loginText {
     text-shadow: 1px 0px #0d6efd;
     font-weight: bold;
 }
+
+/* product */
+.card.custom {
+    height: 343px;
+}
+
+img.card-img-top.custom {
+    height: 180px;
+}
+
+h5.card-title.custom {
+    height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.card-text.custom {
+    height: 48px;
+    overflow: hidden;
+    text-align: justify;
+}
+

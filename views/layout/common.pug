@@ -49,10 +49,15 @@ html(lang="en")
                                     b 
                                         u setCookie                 
                             li.nav-item
-                                a.nav-link(href='/testCookie/get') 
+                                a.nav-link(href='/testCookie/get') getCookie
+                                                     
+                            //- PRODUCTS
+                            li.nav-item
+                                a.nav-link(href='/products/all') 
                                     b 
-                                        u getCookie                 
+                                        u ProductList                 
                 
+                    //- 
                     a.navbar-brand.brandName(href='/') #{currentUserLocal.name}
                     img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
                     a.nav-link.active.logOutText(aria-current='page', href='/auth/logout')
