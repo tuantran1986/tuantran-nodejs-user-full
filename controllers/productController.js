@@ -29,7 +29,21 @@ module.exports.paginationProduct = async (req, res, next) => {
     console.log('========= page : ', page);
     console.log('========= productList : ', productList);
 
+    // "đếm số lượng phần tử" - tạo "pagination"
+    const countDocuments = await productModel.countDocuments({});
+
+    const countPages = Math.ceil(countDocuments/rowPerPage) || 1;       // Math.ceil: làm tròn "LÊN" = số nguyên
+    // const countPages = Math.floor(countDocuments/rowPerPage) || 1;   // Math.floor: làm tròn "XUỐNG" = số nguyên
+    console.log('countPages = ', countPages);
+
+    const queryParams = {
+        countPages: countPages,
+        currentPage: page || 1
+    }
+
+    // 
     res.render('products/pagination', {
-        productList : productList || []
-    })
+        productList : productList || [],
+        queryParams: queryParams
+    });
 };
