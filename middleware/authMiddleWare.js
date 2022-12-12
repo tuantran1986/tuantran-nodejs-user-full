@@ -3,7 +3,7 @@ const userModel = require("../models/userModel");
 
 // 
 module.exports.authRequire = async (req, res, next) => {
-    console.log('doc COOKIE = REQ.COOKIES', req.cookies);
+    // console.log('doc COOKIE = REQ.COOKIES', req.cookies);
 
     // if (!req.cookies.userId) {           // "COOKIE - THƯỜNG"
     if (!req.signedCookies.userId) {        // "SIGNED-COOKIE"

@@ -46,7 +46,11 @@ const { authRequire } = require('./middleware/authMiddleWare');
 // MIDDLEWARE "authRequire" - thực hiện REDIRECT các REQUEST về trang LOGIN (khi USER chưa LOGIN = chưa có: REQ.COOKIES.USERID)
 app.use('/users', authRequire, userRouter);  // userRouter - PATH GỐC = '/users'
 app.use('/testMiddleWare', authRequire, testMiddleWareRouter);   // userRouter - PATH GỐC = '/users'
-app.use('/testCookie', authRequire, testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
+
+// KHI sửa "COOKIE" sang "SIGNER COOKIE" => thì phải BỎ MIDDLEWARE : "authRequire"
+app.use('/testCookie', testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
+// app.use('/testCookie', authRequire, testCookieRouter);           // userRouter - PATH GỐC = '/testCookie'
+
 app.use('/auth', authRouter);           // userRouter - PATH GỐC = '/testCookie'
 
 
