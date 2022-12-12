@@ -6,7 +6,7 @@ block content
     .container
         .row.mt-2
             .col-6
-                h1 All Products
+                h1 Pagination
             .col-2
             .col-4
                 form.ml-auto(action="/users/searchRequest", method="GET" class="container")
@@ -29,3 +29,28 @@ block content
                             div(class="d-grid gap-2")                        
                                 a.btn.btn-primary(href='#') add to cart
                                 //- a.btn.btn-primary(href='/cart/add/' + product._id) add to cart
+
+
+        //- PHAN TRANG: 
+        .row.mt-2
+            nav(aria-label='...')
+                
+                //- TRÔI PHẢI: d-flex.justify-content-end
+                //- https://getbootstrap.com/docs/4.0/utilities/flex/
+                ul.pagination.d-flex.justify-content-end
+                
+                    //- 
+                    li.page-item
+                        a.page-link(href='/products/pagination?page=1') Previous
+                    
+                    //- 
+                    li.page-item
+                        a.page-link(href='/products/pagination?page=2') 2
+                    li.page-item
+                        a.page-link(href='/products/pagination?page=3') 3
+                    li.page-item
+                        a.page-link(href='/products/pagination?page=4') 4
+
+                    //- 
+                    li.page-item
+                        a.page-link(href='/products/pagination?page=5') Next

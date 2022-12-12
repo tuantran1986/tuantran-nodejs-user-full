@@ -8,6 +8,7 @@ const validateCreateUserMDW = require('../validate/validateCreateUserMDW');
 
 // 1. LIST USER:
 productRouter.get('/all', productController.getAllProduct);
+productRouter.get('/pagination', productController.paginationProduct);
 
 
 
