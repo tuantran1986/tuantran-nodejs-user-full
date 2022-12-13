@@ -20,9 +20,14 @@ block content
                                 option(value=n)=n++
 
                 //- NAME
-                .col-8
+                .col-4
                     label(for='controlInput1') Name
                     input#controlInput1.form-control(type='text', name="nameKeySearch", value=queryParams.nameKeySearch)
+
+                //- DESCRIPTION
+                .col-4
+                    label(for='controlInput2') Description
+                    input#controlInput2.form-control(type='text', name="descriptionKeySearch", value=queryParams.descriptionKeySearch)
 
                 //- 
                 div.col-2.mt-2.d-grid.gap-2

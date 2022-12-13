@@ -52,14 +52,16 @@ module.exports.paginationProduct = async (req, res, next) => {
 module.exports.paginationSearchProduct = async (req, res, next) => {
 
     const nameKeySearch = req.query?.nameKeySearch || '';
+    const descriptionKeySearch = req.query?.descriptionKeySearch || '';
 
     // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
-    const regexName = nameKeySearch ? new RegExp(`${nameKeySearch}+`, 'i') : new RegExp(' ', 'i');
     // const regexName = new RegExp(nameKeySearch, 'i');
+    const regexName = nameKeySearch ? new RegExp(`${nameKeySearch}+`, 'i') : new RegExp(' ', 'i');
+    const regexDescription = descriptionKeySearch ? new RegExp(`${descriptionKeySearch}+`, 'i') : new RegExp(' ', 'i');
 
     // 1. ĐẾM SỐ LƯỢNG PHẦN TỬ: (TRƯỚC)
     // "đếm số lượng phần tử" - tạo "pagination"
-    const countDocuments = await productModel.countDocuments({ name: regexName });
+    const countDocuments = await productModel.countDocuments({ name: regexName, description: regexDescription });
 
 
     // 2. PHÂN TRANG:
@@ -77,12 +79,13 @@ module.exports.paginationSearchProduct = async (req, res, next) => {
 
     const queryParams = {
         nameKeySearch: nameKeySearch,
+        descriptionKeySearch: descriptionKeySearch,
         countPages: countPages,
         currentPage: currentPage
     }
 
     // 3.TRA CỨU: (SAU)
-    const productList = await productModel.find({ name: regexName }).skip(skip).limit(limit);
+    const productList = await productModel.find({ name: regexName, description: regexDescription }).skip(skip).limit(limit);
 
     // 
     res.render('products/paginationSearch', {
