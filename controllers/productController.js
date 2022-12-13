@@ -47,3 +47,47 @@ module.exports.paginationProduct = async (req, res, next) => {
         queryParams: queryParams
     });
 };
+
+// 3. TRA CUU: "NAME"
+module.exports.paginationSearchProduct = async (req, res, next) => {
+
+    const nameKeySearch = req.query?.nameKeySearch || '';
+
+    // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+    const regexName = nameKeySearch ? new RegExp(`${nameKeySearch}+`, 'i') : new RegExp(' ', 'i');
+    // const regexName = new RegExp(nameKeySearch, 'i');
+
+    // 1. ĐẾM SỐ LƯỢNG PHẦN TỬ: (TRƯỚC)
+    // "đếm số lượng phần tử" - tạo "pagination"
+    const countDocuments = await productModel.countDocuments({ name: regexName });
+
+
+    // 2. PHÂN TRANG:
+    const page = req.query?.page || 1;
+    const rowPerPage = 8;
+
+    const skip = (countDocuments > rowPerPage * ( page - 1)) ? rowPerPage * ( page - 1) : 0;
+    const limit = rowPerPage;
+
+    const countPages = Math.ceil(countDocuments/rowPerPage) || 1;       // Math.ceil: làm tròn "LÊN" = số nguyên
+    // const countPages = Math.floor(countDocuments/rowPerPage) || 1;   // Math.floor: làm tròn "XUỐNG" = số nguyên
+    // console.log('countPages = ', countPages);
+
+    const currentPage = (countDocuments > rowPerPage * ( page - 1)) ? page : 1;
+
+    const queryParams = {
+        nameKeySearch: nameKeySearch,
+        countPages: countPages,
+        currentPage: currentPage
+    }
+
+    // 3.TRA CỨU: (SAU)
+    const productList = await productModel.find({ name: regexName }).skip(skip).limit(limit);
+
+    // 
+    res.render('products/paginationSearch', {
+        productList : productList || [],
+        queryParams: queryParams
+    });
+
+};
