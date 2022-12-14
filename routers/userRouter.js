@@ -33,6 +33,10 @@ userRouter.post('/createRequest',
 // 4. VIEW DETAILS - USER: khai báo "ID" trong PATH_URL
 userRouter.get('/detail/:id', userController.detail)
 
+// 5. DELETE USER:
+userRouter.get('/delete/:id', userController.deleteFormConfirm);
+userRouter.post('/deleteRequest', userController.deleteRequest);
+
 
 
 module.exports = userRouter;

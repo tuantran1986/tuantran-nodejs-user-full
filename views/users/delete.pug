@@ -1,0 +1,25 @@
+//- kế thừa giao diện
+extends ../layout/common.pug
+block content
+
+    //- 
+    h3(class="text-center mt-2") CONFIRM - DELETE - USER
+
+    .container
+        .row.mt-2
+            //- div.pl-4.userDetailContainer
+            form.ml-auto.pl-4.userDetailContainer(action="/users/deleteRequest", method="POST" class="container")
+                //- DETAILS 6 - nhận dữ liệu USER và hiển thị ở VIEW
+                //- PUG: lấy giá trị biến = toán tử #{}
+                div
+                    img(src=user.avatar, class="imgAvatarDetail")
+                div.mt-4 
+                    b bạn chắc chắn xóa :
+                    span 
+                        i USERNAME = 
+                    b #{user.name}
+                input(class='inputHidden', type='text', name='userId', value=user._id)
+
+                hr
+                div(class="d-grid gap-2")
+                    button.btn.btn-primary.mt-2(type="submit") DELETE USER

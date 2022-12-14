@@ -76,3 +76,11 @@ p.card-text.custom {
     padding: 5px;
     border: 1px dashed #da251d;
 }
+
+.horizonSpace {
+    padding: 5px;
+}
+/* ẨN - THẺ INPUT : DELETE USER */
+.inputHidden {
+    display: none;
+}

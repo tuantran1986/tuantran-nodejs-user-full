@@ -90,3 +90,34 @@ module.exports.detail = async (req, res, next) => {
 
     res.render('users/detail', { user: userDetail });
 };
+
+// 5. DELETE - USER - 
+// 5.1. "CONFIRM DIALOG" : khai báo "ID" trong PATH_URL
+    module.exports.deleteFormConfirm = async (req, res, next) => {
+        console.log('req.params', req.params);
+        const idDetail = req.params?.id || '';  // lấy value_ID trên URL
+        
+        // truy vấn:
+            // MODEL.FINDONE : trả về "1 PHẦN TỬ"
+                const userDetail = await userModel.findOne({ _id: idDetail });
+
+        res.render('users/delete', { user: userDetail });
+    };
+
+// 5.2. "XÓA TRONG - DATABASE"
+    module.exports.deleteRequest = async (req, res, next) => {
+        console.log('req.body', req.body);
+        const idDelete = req.body?.userId || '';  // lấy value_ID trên URL
+        
+        // truy vấn:
+            // MODEL.DELETE ONE : xóa "1 PHẦN TỬ"
+                const userDelete = await userModel.deleteOne({ _id: idDelete });
+                console.log('delete - userDelete: ', userDelete);
+
+
+            // MODEL.FIND : truy van "ALL PHẦN TỬ"
+                const userList = await userModel.find({});
+                console.log('sau delete - userList: ', userList);
+
+        res.render('users/index', { userList: userList });
+    };
