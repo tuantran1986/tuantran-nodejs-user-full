@@ -64,7 +64,8 @@ html(lang="en")
 
                     //- 
                     a.navbar-brand.brandName(href='/') #{currentUserLocal.name}
-                    img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
+                    img(src=currentUserLocal.avatar, class='logoCustomStyle')
+                    //- img(src='/images/Logo_Hust_Vertical.png', class='logoCustomStyle')
                     a.nav-link.active.logOutText(aria-current='page', href='/auth/logout')
                         b Logout
                 else
