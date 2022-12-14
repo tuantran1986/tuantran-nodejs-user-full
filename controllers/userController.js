@@ -45,6 +45,15 @@ module.exports.createGet = async (req, res, next) => {
 module.exports.createPost = async (req, res, next) => {
     // REQ.BODY : lấy dữ liệu từ FORM - POST
     // VALIDATE - CREATE USER = MIDDLEWARE "validateCreateUserMDW"
+
+    console.log('=== req: ', req);
+    console.log('=== req.file: ', req.file);
+    // console.log('=== avatarPath: ', avatarPath);
+    // const avatarPath = '/';
+    const avatarPath = '/' + req.file.path.split('\\').slice(1).join('/');
+
+    console.log('avatarPath', avatarPath)
+
     if (!res.locals.passValidateCreateUser) {
         res.render('users/createPage', {
             errors: res.locals.errorsValidateCreateUser,
@@ -57,7 +66,8 @@ module.exports.createPost = async (req, res, next) => {
         const userNew = {
             name: name, 
             email: email, 
-            password: hashPassWordMd5
+            avatar: avatarPath,             // thêm AVATAR IMAGE = chuỗi STRING
+            password: hashPassWordMd5       // mã hóa password
         };
 
         // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"

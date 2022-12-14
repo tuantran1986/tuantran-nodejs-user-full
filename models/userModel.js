@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/websale2'); // "websale2" = TÊN_DATA_BASE
 const userSchema = new mongoose.Schema({
     name: String,
+    avatar: String,
     email: String,
     password: String
 });         // SCHEMA = cấu trúc 1 DOCUMENT

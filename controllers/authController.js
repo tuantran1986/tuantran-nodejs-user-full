@@ -40,7 +40,7 @@ module.exports.loginRequest = async (req, res, next) => {
             })
         } else {
             // res.cookie('userId', currentUser._id);      // ghi vao "COOKIE" BROWSER: ID của USER
-            res.cookie('userId', currentUser._id, { signed: true });      // ghi vao "SIGNED COOKIE" BROWSER: ID của USER
+            await res.cookie('userId', currentUser._id, { signed: true });      // ghi vao "SIGNED COOKIE" BROWSER: ID của USER
             res.redirect('/');  // về trang HOME
         }
 

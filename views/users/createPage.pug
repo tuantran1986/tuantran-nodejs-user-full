@@ -12,7 +12,9 @@ block content
             //- FORM : SEARCH_REQUEST
             //- ACTION:
             //- METHOD: GET - đẩy data lên URL - BE lấy = "REQUEST.QUERY"
-            form(class="col-6", action='/users/createRequest', method='POST')
+            //- METHOD: POST - đẩy data lên URL - BE lấy = "REQUEST.BODY"
+            //- ENCTYPE: MULTIPATH/FORM-DATA - để upload file
+            form(class="col-6", action='/users/createRequest', method='POST', enctype='multipart/form-data')
 
                 //- VALIDATE: mảng lỗi "errors"
                 if errors
@@ -33,6 +35,12 @@ block content
                 .form-group
                     label(for='password') password:
                     input.form-control(type='text', id='password', name='password', value= lastDataInput&&lastDataInput.password ? lastDataInput.password : '')
+                    br
+
+                //- avatarUser
+                .form-group
+                    label(for='avatarUser') avatarUser:
+                    input.form-control(type='file', id='avatarUser', name='avatarUser', value= lastDataInput&&lastDataInput.avatarUser ? lastDataInput.avatarUser : '')
                     br
 
                 div(class="d-grid gap-2")
