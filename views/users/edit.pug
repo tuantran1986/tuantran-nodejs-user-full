@@ -1,0 +1,47 @@
+//- kế thừa giao diện
+extends ../layout/common.pug
+block content
+
+    //- 2. NỘI DUNG RIÊNG TỪNG BLOCK
+    h3(class="text-center mt-2") EDIT_USER
+
+    .container
+        .row.mt-2   
+            div(class="col-3")
+
+            //- FORM : SEARCH_REQUEST
+            //- ACTION:
+            //- METHOD: GET - đẩy data lên URL - BE lấy = "REQUEST.QUERY"
+            //- METHOD: POST - đẩy data lên URL - BE lấy = "REQUEST.BODY"
+            //- ENCTYPE: MULTIPATH/FORM-DATA - để upload file
+            form(class="col-6", action='/users/editRequest', method='POST', enctype='multipart/form-data')
+
+                //- VALIDATE: mảng lỗi "errors"
+                if errors
+                    each err in errors
+                        div(class="alert alert-danger", role="alert") #{err}
+
+                //- HIỂN THỊ KEYSEARCH - sau khi có kết quả = "value=keyNameSearch"
+                input(class='inputHidden', type='text', name='_id', value=lastDataInput._id)
+                .form-group
+                    label(for='name') name:
+                    input.form-control(type='text', id='name', name='name', value= lastDataInput&&lastDataInput.name ? lastDataInput.name : '')
+                    br                
+                .form-group
+                    label(for='email') email:
+                    input.form-control(type='text', id='email', name='email', value= lastDataInput&&lastDataInput.email ? lastDataInput.email : '')
+                    br
+                //- CHUA LAM DC CHUC NANG - CHANGE PASSWORD = "chua REVERSE dc MD5"
+                .form-group
+                    label(for='password') password:
+                    input.form-control(type='text', id='password', name='password', value= lastDataInput&&lastDataInput.password ? lastDataInput.password : '')
+                    br
+                //- avatarUser
+                .form-group
+                    label(for='avatarUser') avatarUser:
+                    input.form-control(type='file', id='avatarUser', name='avatarUser', value= lastDataInput&&lastDataInput.avatarUser ? lastDataInput.avatarUser : '')
+                    br
+
+                div(class="d-grid gap-2")
+                    button.btn.btn-primary.mt-2(type="submit") UPDATE
+

@@ -7,6 +7,7 @@ const userRouter = express.Router();
 
 const userModel = require('../models/userModel');
 const validateCreateUserMDW = require('../validate/validateCreateUserMDW');
+const validateEditUserMDW = require('../validate/validateEditUserMDW');
 
 // 5. CẤU HÌNH - MULTER: UPLOAD_FILE: thư mục chứa file - upload lên (dest: 'public/uploads/')
 const upload = multer({ dest: 'public/uploads/' });
@@ -36,6 +37,14 @@ userRouter.get('/detail/:id', userController.detail)
 // 5. DELETE USER:
 userRouter.get('/delete/:id', userController.deleteFormConfirm);
 userRouter.post('/deleteRequest', userController.deleteRequest);
+
+// 6. EDIT USER:
+userRouter.get('/edit/:id', userController.editFormConfirm);
+userRouter.post('/editRequest', 
+    upload.single('avatarUser'), 
+    validateEditUserMDW, 
+    userController.editRequest
+);
 
 
 

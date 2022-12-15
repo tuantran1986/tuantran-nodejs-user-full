@@ -1,4 +1,16 @@
-const md5 = require("md5");
+const md5 = require("md5");                 // encode = ma hoa : pass => hash
+var ReverseMd5 = require('reverse-md5');    // decode = giai ma : hash => pass
+// var revMd5 = ReverseMd5();
+
+var rev = ReverseMd5({
+    lettersUpper: false,
+    lettersLower: true,
+    numbers: true,
+    special: false,
+    whitespace: true,
+    maxLen: 12
+})
+
 const userModel = require("../models/userModel");
 
 
@@ -46,20 +58,26 @@ module.exports.createPost = async (req, res, next) => {
     // REQ.BODY : lấy dữ liệu từ FORM - POST
     // VALIDATE - CREATE USER = MIDDLEWARE "validateCreateUserMDW"
 
-    console.log('=== req: ', req);
-    console.log('=== req.file: ', req.file);
-    // console.log('=== avatarPath: ', avatarPath);
-    // const avatarPath = '/';
-    const avatarPath = '/' + req.file.path.split('\\').slice(1).join('/');
-
-    console.log('avatarPath', avatarPath)
-
     if (!res.locals.passValidateCreateUser) {
         res.render('users/createPage', {
             errors: res.locals.errorsValidateCreateUser,
             lastDataInput: req.body
         })
-    } else {
+    } else {        
+        console.log('=== req: ', req);
+        
+        // 1.AVATAR:
+        let avatarPath = '';
+        if (req && req.file) {
+            console.log('=== req.file: ', req.file);
+            // console.log('=== avatarPath: ', avatarPath);
+            // const avatarPath = '/';
+            avatarPath = '/' + req.file.path.split('\\').slice(1).join('/');
+        };
+
+        console.log('avatarPath', avatarPath)
+
+        // 2.NAME - EMAIL - PASSWORD:
         const { name, email, password } = req.body;
         // mã hóa PASSWORD = MD5
         const hashPassWordMd5 = md5(password);  // "123456"  =>  "e10adc3949ba59abbe56e057f20f883e" 
@@ -120,4 +138,74 @@ module.exports.detail = async (req, res, next) => {
                 console.log('sau delete - userList: ', userList);
 
         res.render('users/index', { userList: userList });
+    };
+
+// 6. EDIT - USER - 
+// 6.1. "CONFIRM DIALOG" : khai báo "ID" trong PATH_URL
+    module.exports.editFormConfirm = async (req, res, next) => {
+        console.log('req.params', req.params);
+        const idDetail = req.params?.id || '';  // lấy value_ID trên URL
+        
+        // truy vấn:
+            // MODEL.FINDONE : trả về "1 PHẦN TỬ"
+                const userDetail = await userModel.findOne({ _id: idDetail });
+
+        // CHƯA LÀM XONG CHỨC NĂNG - "CHO SỬA PASSWORD"
+            // giải mã - password = "revMd5"
+            // const passwordReverse = rev(userDetail.password); 
+
+        // méo hiểu sao - KO CLONE ĐC OBJECT = ...
+        // const userDetailReverseMd5 = {...userDetail, password: ''};
+        const userDetailReverseMd5 = {
+            _id: userDetail._id,
+            name: userDetail.name,
+            email: userDetail.email,
+            avatar: userDetail.avatar,
+            password: ''
+            // password: passwordReverse
+        };
+        console.log('userDetailReverseMd5', userDetailReverseMd5);
+            
+        res.render('users/edit', { lastDataInput: userDetailReverseMd5 });
+        // res.render('users/edit', { lastDataInput: userDetail });
+    };
+
+// 6.2. "XÓA TRONG - DATABASE"
+    module.exports.editRequest = async (req, res, next) => {
+        // REQ.BODY : lấy dữ liệu từ FORM - POST
+        // VALIDATE - CREATE USER = MIDDLEWARE "validateEditUserMDW"
+
+        if (!res.locals.passValidateEditUser) {
+            res.render('users/edit', {
+                errors: res.locals.errorsValidateEditUser,
+                lastDataInput: req.body
+            })
+        } else {
+
+            // CHƯA LÀM ĐC CHỨC NĂNG - SỬA PASSWORD
+            const { _id, name, email, password } = req.body;
+
+            // NẾU KO UPLOAD "AVATAR MỚI" - THÌ DÙNG: "AVATAR CŨ"
+                let avatarPath = '';
+                if (req && req.file) {
+                    console.log('=== req.file: ', req.file);
+                    // console.log('=== avatarPath: ', avatarPath);
+                    // const avatarPath = '/';
+                    avatarPath = '/' + req.file.path.split('\\').slice(1).join('/');
+                } else {
+                    const userUpdate = await userModel.findOne({ _id: _id });
+                    avatarPath = userUpdate.avatarPath;
+                }
+                console.log('avatarPath', avatarPath);
+
+            // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+            // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
+            const updateResult = await userModel.updateOne({_id: _id}, {
+                name: name, 
+                email: email, 
+                password: password, 
+                avatar: avatarPath,             // thêm AVATAR IMAGE = chuỗi STRING
+            });                                 // SEARCH = REGEX NAME
+            res.redirect('index'); // REDIRECT - CHUYỂN TRANG
+        }
     };
