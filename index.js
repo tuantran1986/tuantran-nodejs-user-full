@@ -44,9 +44,11 @@ const testCookieRouter = require('./routers/testCookie');
 const authRouter = require('./routers/authRouter');
 const { authRequire } = require('./middleware/authMiddleWare');
 const productRouterAPI = require('./API/routers/productAPIrouter');
+const registerRouter = require('./routers/registerRouter');
 
 // MIDDLEWARE "authRequire" - thực hiện REDIRECT các REQUEST về trang LOGIN (khi USER chưa LOGIN = chưa có: REQ.COOKIES.USERID)
 app.use('/users', authRequire, userRouter);  // userRouter - PATH GỐC = '/users'
+app.use('/register', registerRouter);       // userRouter - PATH GỐC = '/register'
 // PRODUCT
 app.use('/products', authRequire, productRouter);   // userRouter - PATH GỐC = '/users'
 app.use('/productApi', authRequire, productRouterAPI);     // productRouterAPI - PATH GỐC = '/productApi'

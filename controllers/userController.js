@@ -211,3 +211,54 @@ module.exports.detail = async (req, res, next) => {
             res.redirect('index'); // REDIRECT - CHUYỂN TRANG
         }
     };
+
+
+
+// 3. REGISTER USER:
+module.exports.registerForm = async (req, res, next) => {
+    res.render('users/registerPage');
+};
+module.exports.registerRequest = async (req, res, next) => {
+    // REQ.BODY : lấy dữ liệu từ FORM - POST
+    // VALIDATE - CREATE USER = MIDDLEWARE "validateCreateUserMDW"
+
+    if (!res.locals.passValidateCreateUser) {
+        res.render('users/registerPage', {
+            errors: res.locals.errorsValidateCreateUser,
+            lastDataInput: req.body
+        })
+    } else {        
+        console.log('=== req: ', req);        
+        // 1.AVATAR:
+        let avatarPath = '';
+        if (req && req.file) {
+            console.log('=== req.file: ', req.file);
+            // console.log('=== avatarPath: ', avatarPath);
+            // const avatarPath = '/';
+            avatarPath = '/' + req.file.path.split('\\').slice(1).join('/');
+        };
+        console.log('avatarPath', avatarPath)
+
+        // 2.NAME - EMAIL - PASSWORD:
+        const { name, email, password } = req.body;
+        // mã hóa PASSWORD = MD5
+        const hashPassWordMd5 = md5(password);  // "123456"  =>  "e10adc3949ba59abbe56e057f20f883e" 
+        const userNew = {
+            name: name, 
+            email: email, 
+            avatar: avatarPath,             // thêm AVATAR IMAGE = chuỗi STRING
+            password: hashPassWordMd5       // mã hóa password
+        };
+
+        // "truy vấn dữ liệu" - trong DATABASE = FIND - nhớ: "ASYNC - AWAIT"
+        // CYDB - MONGO DB - THÊM MỚI = "MODEL.CREATE"
+        const userRegister = await userModel.create(userNew); // SEARCH = REGEX NAME
+            // KHI ĐĂNG KÝ THÀNH CÔNG => LÀM 2 VIỆC:
+                // GHI VÀO COOKIE SIGNER : USERID
+                // CHUYỂN TRANG VỀ TRANG CHỦ "HOME"
+                    console.log('userRegister : ', userRegister);
+                    // res.cookie('userId', currentUser._id);      // ghi vao "COOKIE" BROWSER: ID của USER
+                    await res.cookie('userId', userRegister._id, { signed: true });      // ghi vao "SIGNED COOKIE" BROWSER: ID của USE
+                    res.redirect('/'); // REDIRECT - CHUYỂN TRANG "HOME PAGE"
+    }
+};
