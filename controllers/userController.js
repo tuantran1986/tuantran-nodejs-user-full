@@ -184,6 +184,8 @@ module.exports.detail = async (req, res, next) => {
 
             // CHƯA LÀM ĐC CHỨC NĂNG - SỬA PASSWORD
             const { _id, name, email, password } = req.body;
+            const hashPassWord = md5(password);
+
 
             // NẾU KO UPLOAD "AVATAR MỚI" - THÌ DÙNG: "AVATAR CŨ"
                 let avatarPath = '';
@@ -203,7 +205,7 @@ module.exports.detail = async (req, res, next) => {
             const updateResult = await userModel.updateOne({_id: _id}, {
                 name: name, 
                 email: email, 
-                password: password, 
+                password: hashPassWord, 
                 avatar: avatarPath,             // thêm AVATAR IMAGE = chuỗi STRING
             });                                 // SEARCH = REGEX NAME
             res.redirect('index'); // REDIRECT - CHUYỂN TRANG
