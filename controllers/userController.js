@@ -1,15 +1,15 @@
 const md5 = require("md5");                 // encode = ma hoa : pass => hash
-var ReverseMd5 = require('reverse-md5');    // decode = giai ma : hash => pass
+// var ReverseMd5 = require('reverse-md5');    // decode = giai ma : hash => pass
 // var revMd5 = ReverseMd5();
 
-var rev = ReverseMd5({
-    lettersUpper: false,
-    lettersLower: true,
-    numbers: true,
-    special: false,
-    whitespace: true,
-    maxLen: 12
-})
+// var rev = ReverseMd5({
+//     lettersUpper: false,
+//     lettersLower: true,
+//     numbers: true,
+//     special: false,
+//     whitespace: true,
+//     maxLen: 12
+// })
 
 const userModel = require("../models/userModel");
 
